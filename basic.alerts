@@ -1,0 +1,71 @@
+ALERT InstanceDown
+  IF up == 0
+  FOR 5m
+  LABELS {
+    severity = "low",
+    job = "{{ $labels.job }}",
+    host = "{{ $labels.host }}",
+    path = "{{ $labels.path }}",
+  }
+  ANNOTATIONS {
+    summary = "Instance {{ $labels.instance }} down",
+    description = " {{ $labels.instance }} of jobs {{ $labels.job }} has been down for more than 5 minutes",
+  }
+
+ALERT APIHighRequestLatency
+  IF http_request_latencies_second{quantile="0.5"} > 1
+  FOR 1m
+  LABELS {
+    severity = "low",
+    job = "{{ $labels.job }}",
+    host = "{{ $labels.host }}",
+    path = "{{ $labels.path }}",
+  }
+  ANNOTATIONS {
+    summary = "High request latency on {{ $labels.instance }}",
+    description = "{{ $labels.instance }} has a media request latency above 1s (current value: {{ $ value }}s)",
+  }
+
+ALERT FileNotFound
+  IF rate(http_requests_total{code="404"}[5m]) > 0
+  LABELS {
+    severity = "low",
+    job = "{{ $labels.job }}",
+    host = "{{ $labels.host }}",
+    path = "{{ $labels.path }}",
+  }
+
+ALERT ServerError
+  IF rate(http_requests_total{code="500"}[5m]) > 0
+  LABELS {
+    severity = "high",
+    job = "{{ $labels.job }}",
+    host = "{{ $labels.host }}",
+    path = "{{ $labels.path }}",
+  }
+
+instance:fd_utilization = process_open_fds / process_max_fds
+
+ALERT FdExhaustionClose
+IF predict_linear(instance:fd_utilization[1h], 3600 * 4) > 1
+FOR 10m
+LABELS {
+  severity = "warning"
+}
+ANNOTATIONS {
+  summary = "file descriptors soon exhausted",
+  description = "{{ $labels.job }} instance {{ $labels.instance }} will exhaust in file descriptors soon",
+}
+
+ALERT KubeletPodCountLow
+IF kubelet_running_pod_count < 3
+FOR 10m
+LABELS {
+  severity = "warning"
+}
+ANNOTATIONS {
+  summary = "",
+  description = "{{ $labels.job }} instance {{ $labels.instance }} will exhaust in file descriptors soon",
+}
+
+job:http_inprogress_requests:sum = sum(http_inprogress_requests) by (job)

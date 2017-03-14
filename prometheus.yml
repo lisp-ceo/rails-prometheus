@@ -1,0 +1,24 @@
+global:
+  scrape_interval: "15s"
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets:
+        - "localhost:9090"
+  - job_name: "prometheus-rails"
+    static_configs:
+      - targets:
+        - "localhost:3000"
+rule_files:
+  - basic.alerts
+  - basic.rules
+
+# Alerting specifies settings related to the Alertmanager.
+alerting:
+  # alert_relabel_configs:
+  #   [ - <relabel_config> ... ]
+  alertmanagers:
+    - static_configs:
+      - targets:
+        - 'localhost:9093'

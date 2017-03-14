@@ -1,0 +1,8 @@
+#!/bin/bash
+set -x
+    
+ENVIRONMENT:="DEVELOPMENT"
+
+RAILS_ENV=$ENVIRONMENT bundle install && \
+bundle exec db:migrate && \
+bundle exec rails s

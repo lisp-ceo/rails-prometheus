@@ -1,0 +1,28 @@
+global:
+  slack_api_url: 'XXX'
+  smtp_smarthost: 'XXX'
+  smtp_from: 'XXX'
+  smtp_auth_username: 'XXX'
+  smtp_auth_password: 'XXX'
+
+# https://prometheus.io/docs/alerting/configuration/#example
+# For configuring multiple receivers / partioning receivers
+
+route:
+  receiver: 'slack-notifications'
+  # All alerts in a notification have the same value for these labels.
+  group_by: [alertname, job, host, path]
+  group_wait: 0s # Batches alerts with matching groups together and waits this long for the notifications to get dispatched
+  group_interval: 10s # Further alerts fired after this long
+  repeat_interval: 10s
+
+receivers:
+- name: 'slack-notifications'
+  slack_configs:
+  - channel: '#operations'
+    text: |
+      Job: {{ .GroupLabels.job }}. Alert: {{ .GroupLabels.alertname}}. Instance: {{ .GroupLabels.job }}. Path {{ .GroupLabels.path }}. Host: {{ .GroupLabels.host }}.
+    api_url: https://hooks.slack.com/services/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
+- name: 'email'
+  email_configs:
+    - to: james.meldrum@maxwellforest.com

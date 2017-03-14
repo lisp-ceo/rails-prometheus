@@ -1,0 +1,21 @@
+<% provide(:title, "Histogram") %>
+<%= render partial: 'back' %>
+<h1>Histogram</h1>
+<p>A histogram samples observations (usually things like request durations or response sizes) and counts them in configurable buckets. It also provides a sum of all observed values.</p>
+<b> New value: <%= @new_value %></b>
+<dl>
+<% @observations.map do |k, v| %>
+  <dt><%= k %></dt>
+  <dv><%= v %></dv>
+<% end %>
+</dl>
+<pre style='color:#000000;background:#f1f0f0;'><span style='color:#c34e00; '># A histogram samples observations (usually things like request durations or response sizes) and counts</span>
+<span style='color:#c34e00; '># them in configurable buckets. It also provides a sum of all observed values.</span>
+<span style='color:#400000; font-weight:bold; '>def</span> histogram
+  <span style='color:#c34e00; '># Record a value</span>
+  @new_value <span style='color:#806030; '>=</span> Random<span style='color:#806030; '>.</span>rand
+  HISTOGRAM_EXAMPLE<span style='color:#806030; '>.</span>observe<span style='color:#806030; '>(</span><span style='color:#806030; '>{</span><span style='color:#005fd2; '>service</span>: :<span style='color:#005fd2; '>jumping_users</span><span style='color:#806030; '>}</span><span style='color:#806030; '>,</span> @new_value<span style='color:#806030; '>)</span>
+  <span style='color:#c34e00; '># Retrieve the current bucketed values</span>
+  @observations <span style='color:#806030; '>=</span> HISTOGRAM_EXAMPLE<span style='color:#806030; '>.</span>get<span style='color:#806030; '>(</span><span style='color:#005fd2; '>service</span>: :<span style='color:#005fd2; '>jumping_users</span><span style='color:#806030; '>)</span>
+<span style='color:#400000; font-weight:bold; '>end</span>
+</pre>

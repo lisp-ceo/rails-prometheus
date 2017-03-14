@@ -1,0 +1,18 @@
+<% provide(:title, "Counter") %>
+<%= render partial: 'back' %>
+<h1>Counter</h1>
+<p>Counter is a metric that exposes merely a sum or tally of things.</p>
+
+<dl>
+  <dd><b>@counter_value = </b> <%= @counter_value%></dd>
+</dl>
+
+<pre style='color:#000000;background:#f1f0f0;'><span style='color:#400000; font-weight:bold; '>def</span> counter
+  COUNTER_EXAMPLE
+    <span style='color:#806030; '>.</span>increment <span style='color:#005fd2; '>service</span>: <span style='color:#e60000; '>'GiftCardService'</span><span style='color:#806030; '>,</span>
+               <span style='color:#005fd2; '>arbitrary</span>: <span style='color:#e60000; '>'key-value pairs'</span>
+  <span style='color:#c34e00; '># Next query the counter for a given label set</span>
+  @counter_value <span style='color:#806030; '>=</span> COUNTER_EXAMPLE
+                     <span style='color:#806030; '>.</span>get <span style='color:#005fd2; '>service</span>: <span style='color:#e60000; '>'GiftCardService'</span>
+<span style='color:#400000; font-weight:bold; '>end</span>
+</pre>

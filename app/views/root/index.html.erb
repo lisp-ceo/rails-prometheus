@@ -1,0 +1,38 @@
+  <% provide(:title, "Prometheus Demo") %>
+  <h1>Prometheus Demo</h1>
+  <h4>Scraping Endpoint</h4>
+  <ul>
+    <li>
+      <%= link_to "Metrics (Prometheus::Middleware::Exporter + Prometheus::Middleware::Collector)", "/metrics" %>
+    </li>
+  </ul>
+  <h4>Custom Metrics</h4>
+  <ul>
+    <li>
+      <%= link_to "Counter", counter_path %>
+    </li>
+    <li>
+      <%= link_to "Gauge", gauge_path %>
+    </li>
+    <li>
+      <%= link_to "Histogram", histogram_path %>
+    </li>
+    <li>
+      <%= link_to "Summary", summary_path %>
+    </li>
+  </ul>
+  <h4>Support Services</h4>
+  <ul>
+    <li>
+      <%= link_to "Prometheus Dashboard", prometheus_path %>
+    </li>
+    <li>
+      <%= link_to "Grafana Dashboard", grafana_path %>
+    </li>
+    <li>
+      <%= link_to "Alert Manager", alert_manager_path %>
+    </li>
+    <li>
+      <%= link_to "Kubernetes Dashboard", kubernetes_dashboard_path %>
+    </li>
+  </ul>

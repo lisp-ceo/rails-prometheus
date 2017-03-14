@@ -1,0 +1,21 @@
+<% provide(:title, "Gauge") %>
+<%= render partial: 'back' %>
+<h1>Gauge</h1>
+<p>Gauge is a metric that exposes merely an instantaneous value or some snapshot thereof.</p>
+
+<% if @gauge_value > 9000.0 %>
+  <h1>It's over 9000!</h1>
+<% end %>
+
+<dl>
+  <dd><b>@gauge_value = </b> <%= @gauge_value%></dd>
+</dl>
+
+<pre style='color:#000000;background:#f1f0f0;'><span style='color:#c34e00; '># Gauge is a metric that exposes merely an instantaneous value or some snapshot thereof.</span>
+<span style='color:#400000; font-weight:bold; '>def</span> gauge
+  GAUGE_EXAMPLE
+    <span style='color:#806030; '>.</span>set<span style='color:#806030; '>(</span><span style='color:#806030; '>{</span><span style='color:#005fd2; '>vehicle</span>: :<span style='color:#005fd2; '>fastest_speed_boat</span><span style='color:#806030; '>}</span><span style='color:#806030; '>,</span> Random<span style='color:#806030; '>.</span>rand <span style='color:#806030; '>*</span> <span style='color:#c00000; '>9000</span> <span style='color:#806030; '>*</span> <span style='color:#c00000; '>2</span><span style='color:#806030; '>)</span>
+  @gauge_value <span style='color:#806030; '>=</span> GAUGE_EXAMPLE
+                   <span style='color:#806030; '>.</span>get <span style='color:#005fd2; '>vehicle</span>: :<span style='color:#005fd2; '>fastest_speed_boat</span>
+<span style='color:#400000; font-weight:bold; '>end</span>
+</pre>
